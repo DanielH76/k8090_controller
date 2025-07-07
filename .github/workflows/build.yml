@@ -1,0 +1,35 @@
+name: Windows build
+
+on:
+  push:
+    branches:
+      - release
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+          token: ${{ secrets.GH_PAT }}
+
+      - uses: kuhnroyal/flutter-fvm-config-action@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: pub get
+        run: flutter pub get
+
+      - run: flutter build windows --release
+      - run: ls build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: build/windows
