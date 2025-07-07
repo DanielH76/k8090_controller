@@ -70,10 +70,6 @@ class RelayService {
     port.writeBytesFromUint8List(bytes);
   }
 
-  void sendCommand(Uint8List command) {
-    port.writeBytesFromUint8List(command);
-  }
-
   void dispose() {
     port.close();
   }
