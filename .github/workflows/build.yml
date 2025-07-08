@@ -27,7 +27,22 @@ jobs:
         run: flutter pub get
 
       - run: flutter build windows --release
-      - run: ls build
+      - name: Download VC++ redistributable
+        run: |
+          Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe"
+      - name: Install VC++ redistributable
+        run: |
+          .\vc_redist.x64.exe /install /quiet /norestart
+
+      - name: Copy required VC++ runtime DLLs
+        run: |
+          $dest = "build/windows/runner/Release"
+          Copy-Item "C:\Windows\System32\MSVCP140.dll" $dest
+          Copy-Item "C:\Windows\System32\VCRUNTIME140.dll" $dest
+          Copy-Item "C:\Windows\System32\VCRUNTIME140_1.dll" $dest
+          if (Test-Path "C:\Windows\System32\CONCRT140.dll") {
+            Copy-Item "C:\Windows\System32\CONCRT140.dll" $dest
+          }
 
       - uses: actions/upload-artifact@v4
         with:
