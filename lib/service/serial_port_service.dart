@@ -10,17 +10,17 @@ class RelayService {
     port.openWithSettings(BaudRate: 19200, Parity: 0, StopBits: 1, ByteSize: 8);
   }
 
-  void sendONCommand20(int relay) {
+  Future<void> sendONCommand20(int relay) async {
     final bytes = Uint8List(5);
     bytes[0] = 0x04;
     bytes[1] = 0x20;
     bytes[2] = relay;
     bytes[3] = 0x00;
     bytes[4] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3];
-    port.writeBytesFromUint8List(bytes);
+    await port.writeBytesFromUint8List(bytes);
   }
 
-  void sendOFFCommand21(int relay) {
+  Future<void> sendOFFCommand21(int relay) async {
     final bytes = Uint8List(5);
     bytes[0] = 0x04;
     bytes[1] = 0x21;
@@ -30,7 +30,7 @@ class RelayService {
     port.writeBytesFromUint8List(bytes);
   }
 
-  void sendTimerCommand22(int relay) {
+  Future<void> sendTimerCommand22(int relay) async {
     final bytes = Uint8List(5);
     bytes[0] = 0x04;
     bytes[1] = 0x22;
@@ -40,7 +40,7 @@ class RelayService {
     port.writeBytesFromUint8List(bytes);
   }
 
-  void sendONCommand11(int relay) {
+  Future<void> sendONCommand11(int relay) async {
     final bytes = Uint8List(5);
     bytes[0] = 0x04;
     bytes[1] = 0x11;
@@ -50,7 +50,7 @@ class RelayService {
     port.writeBytesFromUint8List(bytes);
   }
 
-  void sendOFFCommand12(int relay) {
+  Future<void> sendOFFCommand12(int relay) async {
     final bytes = Uint8List(5);
     bytes[0] = 0x04;
     bytes[1] = 0x12;
@@ -60,7 +60,7 @@ class RelayService {
     port.writeBytesFromUint8List(bytes);
   }
 
-  void sendTimerCommand41(int relay) {
+  Future<void> sendTimerCommand41(int relay) async {
     final bytes = Uint8List(5);
     bytes[0] = 0x04;
     bytes[1] = 0x41;

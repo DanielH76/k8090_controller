@@ -90,16 +90,21 @@ class _PortControlsState extends State<_PortControls> {
               children: [
                 Text("USB RÅ"),
                 FilledButton(
-                  onPressed: () => relayService.sendONCommand20(widget.relay),
+                  onPressed:
+                      () async =>
+                          await relayService.sendONCommand20(widget.relay),
                   child: Text("TÆND PORT 4 - kode 20"),
                 ),
                 FilledButton(
-                  onPressed: () => relayService.sendOFFCommand21(widget.relay),
+                  onPressed:
+                      () async =>
+                          await relayService.sendOFFCommand21(widget.relay),
                   child: Text("SLUK PORT 4 - kode 21"),
                 ),
                 FilledButton(
                   onPressed:
-                      () => relayService.sendTimerCommand22(widget.relay),
+                      () async =>
+                          await relayService.sendTimerCommand22(widget.relay),
                   child: Text("SÆT TIMER PORT 4 - kode 22"),
                 ),
               ],
@@ -109,16 +114,21 @@ class _PortControlsState extends State<_PortControls> {
               children: [
                 Text("USB DLL"),
                 FilledButton(
-                  onPressed: () => relayService.sendONCommand11(widget.relay),
+                  onPressed:
+                      () async =>
+                          await relayService.sendONCommand11(widget.relay),
                   child: Text("TÆND PORT 4 - kode 11"),
                 ),
                 FilledButton(
-                  onPressed: () => relayService.sendOFFCommand12(widget.relay),
+                  onPressed:
+                      () async =>
+                          await relayService.sendOFFCommand12(widget.relay),
                   child: Text("SLUK PORT 4 - kode 12"),
                 ),
                 FilledButton(
                   onPressed:
-                      () => relayService.sendTimerCommand41(widget.relay),
+                      () async =>
+                          await relayService.sendTimerCommand41(widget.relay),
                   child: Text("SÆT TIMER PORT 4 - kode 41"),
                 ),
               ],
