@@ -107,6 +107,13 @@ class _PortControlsState extends State<_PortControls> {
                           await relayService.sendTimerCommand22(widget.relay),
                   child: Text("SÆT TIMER PORT 4 - kode 22"),
                 ),
+                FilledButton(
+                  onPressed:
+                      () async => await relayService.sendToggleRelayCommand(
+                        widget.relay,
+                      ),
+                  child: Text("SÆT TOGGLE PORT 4 - kode 14"),
+                ),
               ],
             ),
             Column(
