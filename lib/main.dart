@@ -149,12 +149,23 @@ class __RelayControlsState extends State<_RelayControls> {
           foregroundColor: Colors.white,
           child: Text("SLUK"),
         ),
+        AsyncFilledButton(
+          future: widget.relayService.sendToggleRelayCommand(
+            widget.relayByteValue,
+          ),
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blueAccent,
+          child: Text("TOGGLE"),
+        ),
         Row(
           spacing: 10,
           mainAxisSize: MainAxisSize.min,
           children: [
             AsyncFilledButton(
-              future: widget.relayService.sendONCommand(widget.relayByteValue),
+              future: widget.relayService.sendTimerCommand(
+                widget.relayByteValue,
+                timerDurationController.value,
+              ),
               backgroundColor: Colors.deepPurple,
               foregroundColor: Colors.white,
               child: Text("TIMER"),
@@ -163,6 +174,7 @@ class __RelayControlsState extends State<_RelayControls> {
               width: 45,
               child: TextFormField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                initialValue: timerDurationController.value.toString(),
                 onChanged:
                     (value) => timerDurationController.value = int.parse(value),
               ),
