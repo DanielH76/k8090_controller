@@ -36,7 +36,10 @@ jobs:
 
       - name: Copy required VC++ runtime DLLs
         run: |
-          $dest = "build/windows/runner/Release"
+          $dest = "$(Get-Location)\build\windows\runner\Release"
+          if (-Not (Test-Path $dest)) {
+            New-Item -ItemType Directory -Path $dest -Force | Out-Null
+          }
           Copy-Item "C:\Windows\System32\MSVCP140.dll" $dest
           Copy-Item "C:\Windows\System32\VCRUNTIME140.dll" $dest
           Copy-Item "C:\Windows\System32\VCRUNTIME140_1.dll" $dest
