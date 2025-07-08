@@ -75,8 +75,8 @@ class RelayService {
     bytes[0] = 0x04;
     bytes[1] = 0x41;
     bytes[2] = relay;
-    bytes[3] = 0x05;
-    bytes[4] = 0x00;
+    bytes[3] = 0x00;
+    bytes[4] = 0x05;
     bytes[5] = calculateChecksum(bytes);
     bytes[6] = 0x0f;
     port.writeBytesFromUint8List(bytes);
