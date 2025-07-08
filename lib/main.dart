@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:k8090_controller/service/serial_port_service.dart';
 
@@ -66,6 +68,7 @@ class _PortControls extends StatefulWidget {
 
 class _PortControlsState extends State<_PortControls> {
   late final RelayService relayService;
+  Uint8List relayedBytes = Uint8List(7);
 
   @override
   void initState() {
@@ -82,6 +85,7 @@ class _PortControlsState extends State<_PortControls> {
           true => "FORBINDELSE",
           _ => "INGEN FORBINDELSE",
         }),
+        Row(children: [for (final byte in relayedBytes) Text("$byte")]),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -108,10 +112,15 @@ class _PortControlsState extends State<_PortControls> {
                   child: Text("SÆT TIMER PORT 4 - kode 22"),
                 ),
                 FilledButton(
-                  onPressed:
-                      () async => await relayService.sendToggleRelayCommand(
-                        widget.relay,
-                      ),
+                  onPressed: () async {
+                    final bytes = await relayService.sendToggleRelayCommand(
+                      widget.relay,
+                    );
+
+                    setState(() {
+                      relayedBytes = bytes;
+                    });
+                  },
                   child: Text("SÆT TOGGLE PORT 4 - kode 14"),
                 ),
               ],

@@ -82,7 +82,7 @@ class RelayService {
     port.writeBytesFromUint8List(bytes);
   }
 
-  Future<void> sendToggleRelayCommand(int relay) async {
+  Future<Uint8List> sendToggleRelayCommand(int relay) async {
     final bytes = Uint8List(7);
     bytes[0] = 0x04;
     bytes[1] = 0x14;
@@ -92,10 +92,11 @@ class RelayService {
     bytes[5] = calculateChecksum(bytes);
     bytes[6] = 0x0f;
     port.writeBytesFromUint8List(bytes);
+    return bytes;
   }
 
   int calculateChecksum(Uint8List bytes) {
-    return -(bytes[0] + bytes[1] + bytes[2] + bytes[3] + bytes[4]) + 1;
+    return -(bytes[0] + bytes[1] + bytes[2] + bytes[3] + bytes[4]);
   }
 
   void dispose() {
