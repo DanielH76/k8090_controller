@@ -17,7 +17,7 @@ class RelayService {
     bytes[2] = relay;
     bytes[3] = 0x00;
     bytes[4] = 0x00;
-    bytes[5] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3] ^ bytes[4];
+    bytes[5] = calculateChecksum(bytes);
     await port.writeBytesFromUint8List(bytes);
   }
 
@@ -28,7 +28,7 @@ class RelayService {
     bytes[2] = relay;
     bytes[3] = 0x00;
     bytes[4] = 0x00;
-    bytes[5] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3] ^ bytes[4];
+    bytes[5] = calculateChecksum(bytes);
     port.writeBytesFromUint8List(bytes);
   }
 
@@ -39,7 +39,7 @@ class RelayService {
     bytes[2] = relay;
     bytes[3] = 0x05;
     bytes[4] = 0x00;
-    bytes[5] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3] ^ bytes[4];
+    bytes[5] = calculateChecksum(bytes);
     port.writeBytesFromUint8List(bytes);
   }
 
@@ -50,7 +50,7 @@ class RelayService {
     bytes[2] = relay;
     bytes[3] = 0x00;
     bytes[4] = 0x00;
-    bytes[5] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3] ^ bytes[4];
+    bytes[5] = calculateChecksum(bytes);
     port.writeBytesFromUint8List(bytes);
   }
 
@@ -61,7 +61,7 @@ class RelayService {
     bytes[2] = relay;
     bytes[3] = 0x00;
     bytes[4] = 0x00;
-    bytes[5] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3] ^ bytes[4];
+    bytes[5] = calculateChecksum(bytes);
     port.writeBytesFromUint8List(bytes);
   }
 
@@ -72,7 +72,7 @@ class RelayService {
     bytes[2] = relay;
     bytes[3] = 0x05;
     bytes[4] = 0x00;
-    bytes[5] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3] ^ bytes[4];
+    bytes[5] = calculateChecksum(bytes);
     port.writeBytesFromUint8List(bytes);
   }
 
@@ -83,8 +83,12 @@ class RelayService {
     bytes[2] = relay;
     bytes[3] = 0x00;
     bytes[4] = 0x00;
-    bytes[5] = bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3] ^ bytes[4];
+    bytes[5] = calculateChecksum(bytes);
     port.writeBytesFromUint8List(bytes);
+  }
+
+  int calculateChecksum(Uint8List bytes) {
+    return -(bytes[0] + bytes[1] + bytes[2] + bytes[3] + bytes[4]) + 1;
   }
 
   void dispose() {
