@@ -138,21 +138,19 @@ class __RelayControlsState extends State<_RelayControls> {
       children: [
         Text("RELÆ ${widget.relayPosition + 1}"),
         AsyncFilledButton(
-          future: widget.relayService.sendONCommand(widget.relayByteValue),
+          onPressed: _sendONCommand,
           backgroundColor: Colors.greenAccent,
           foregroundColor: Colors.white,
           child: Text("TÆND"),
         ),
         AsyncFilledButton(
-          future: widget.relayService.sendOFFCommand(widget.relayByteValue),
+          onPressed: _sendOFFCommand,
           backgroundColor: Colors.redAccent,
           foregroundColor: Colors.white,
           child: Text("SLUK"),
         ),
         AsyncFilledButton(
-          future: widget.relayService.sendToggleRelayCommand(
-            widget.relayByteValue,
-          ),
+          onPressed: _sendToggleCommand,
           foregroundColor: Colors.white,
           backgroundColor: Colors.blueAccent,
           child: Text("TOGGLE"),
@@ -162,10 +160,7 @@ class __RelayControlsState extends State<_RelayControls> {
           mainAxisSize: MainAxisSize.min,
           children: [
             AsyncFilledButton(
-              future: widget.relayService.sendTimerCommand(
-                widget.relayByteValue,
-                timerDurationController.value,
-              ),
+              onPressed: _sendTimerCommand,
               backgroundColor: Colors.deepPurple,
               foregroundColor: Colors.white,
               child: Text("TIMER"),
@@ -184,4 +179,16 @@ class __RelayControlsState extends State<_RelayControls> {
       ],
     );
   }
+
+  Future<void> _sendONCommand() async =>
+      await widget.relayService.sendONCommand(widget.relayByteValue);
+
+  Future<void> _sendOFFCommand() async =>
+      await widget.relayService.sendOFFCommand(widget.relayByteValue);
+
+  Future<void> _sendToggleCommand() async =>
+      widget.relayService.sendToggleRelayCommand(widget.relayByteValue);
+
+  Future<void> _sendTimerCommand() async => widget.relayService
+      .sendTimerCommand(widget.relayByteValue, timerDurationController.value);
 }
