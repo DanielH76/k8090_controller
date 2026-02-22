@@ -36,7 +36,7 @@ jobs:
 
       - name: Copy required VC++ runtime DLLs
         run: |
-          $dest = "$(Get-Location)\build\windows\runner\Release"
+          $dest = "$(Get-Location)\build\windows\x64\runner\Release"
           if (-Not (Test-Path $dest)) {
             New-Item -ItemType Directory -Path $dest -Force | Out-Null
           }
